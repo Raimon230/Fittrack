@@ -1,15 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './styles.css'
 import Onboarding from './pages/Onboarding'
 import Dashboard from './pages/Dashboard'
 import History from './pages/History'
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('dashboard')
   const [profile, setProfile] = useState(null)
+  const [currentPage, setCurrentPage] = useState('dashboard')
   const [loading, setLoading] = useState(true)
 
-  React.useEffect(() => {
+  useEffect(() => {
     const savedProfile = localStorage.getItem('ft_profile')
     if (savedProfile) {
       setProfile(JSON.parse(savedProfile))
@@ -17,44 +17,42 @@ function App() {
     setLoading(false)
   }, [])
 
+  const handleProfileSave = (profileData) => {
+    localStorage.setItem('ft_profile', JSON.stringify(profileData))
+    setProfile(profileData)
+  }
+
   if (loading) {
-    return <div className="app loading">Cargando FitTrack...</div>
+    return <div className="app loading">Cargando...</div>
   }
 
   if (!profile) {
-    return <Onboarding onComplete={(newProfile) => {
-      setProfile(newProfile)
-      localStorage.setItem('ft_profile', JSON.stringify(newProfile))
-    }} />
-  }
-
-  const handleLogout = () => {
-    localStorage.removeItem('ft_profile')
-    localStorage.removeItem('ft_sessions')
-    setProfile(null)
-    setCurrentPage('dashboard')
+    return <Onboarding onProfileSave={handleProfileSave} />
   }
 
   return (
     <div className="app">
       <div className="navbar">
-        <button 
+        <button
           className={`nav-btn ${currentPage === 'dashboard' ? 'active' : ''}`}
           onClick={() => setCurrentPage('dashboard')}
         >
-          📊 Dashboard
+          Dashboard
         </button>
-        <button 
+        <button
           className={`nav-btn ${currentPage === 'history' ? 'active' : ''}`}
           onClick={() => setCurrentPage('history')}
         >
-          📈 Historial
+          Historial
         </button>
-        <button 
+        <button
           className="nav-btn logout"
-          onClick={handleLogout}
+          onClick={() => {
+            localStorage.removeItem('ft_profile')
+            setProfile(null)
+          }}
         >
-          🚪 Salir
+          Salir
         </button>
       </div>
 
@@ -67,3 +65,4 @@ function App() {
 }
 
 export default App
+
