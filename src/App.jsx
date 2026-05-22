@@ -27,7 +27,7 @@ function App() {
   }
 
   if (!profile) {
-    return <Onboarding onProfileSave={handleProfileSave} />
+    return <Onboarding onComplete={handleProfileSave} />
   }
 
   return (
