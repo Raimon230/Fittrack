@@ -83,9 +83,9 @@ function App() {
           <Dashboard profile={profile} />
         )}
 
-        {/*currentPage === 'workout' && (
+        {currentPage === 'workout' && (
           <Workout />
-        )}*/
+        )}
 
         {currentPage === 'history' && (
           <History />
