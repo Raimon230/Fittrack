@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './styles.css'
+import Workout from './pages/Workout'
 import Onboarding from './pages/Onboarding'
 import Dashboard from './pages/Dashboard'
 import History from './pages/History'
@@ -33,18 +34,28 @@ function App() {
   return (
     <div className="app">
       <div className="navbar">
+        
         <button
           className={`nav-btn ${currentPage === 'dashboard' ? 'active' : ''}`}
           onClick={() => setCurrentPage('dashboard')}
         >
           Dashboard
         </button>
+
+        <button
+          className={`nav-btn ${currentPage === 'workout' ? 'active' : ''}`}
+          onClick={() => setCurrentPage('workout')}
+        >
+          Workout
+        </button>
+
         <button
           className={`nav-btn ${currentPage === 'history' ? 'active' : ''}`}
           onClick={() => setCurrentPage('history')}
         >
           Historial
         </button>
+
         <button
           className="nav-btn logout"
           onClick={() => {
@@ -54,10 +65,14 @@ function App() {
         >
           Salir
         </button>
+
       </div>
 
       <div className="content">
         {currentPage === 'dashboard' && <Dashboard profile={profile} />}
+        
+        {currentPage === 'workout' && <Workout />}
+        
         {currentPage === 'history' && <History />}
       </div>
     </div>
@@ -65,4 +80,3 @@ function App() {
 }
 
 export default App
-
