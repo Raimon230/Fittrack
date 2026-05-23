@@ -12,14 +12,20 @@ function App() {
 
   useEffect(() => {
     const savedProfile = localStorage.getItem('ft_profile')
+
     if (savedProfile) {
       setProfile(JSON.parse(savedProfile))
     }
+
     setLoading(false)
   }, [])
 
   const handleProfileSave = (profileData) => {
-    localStorage.setItem('ft_profile', JSON.stringify(profileData))
+    localStorage.setItem(
+      'ft_profile',
+      JSON.stringify(profileData)
+    )
+
     setProfile(profileData)
   }
 
@@ -33,48 +39,60 @@ function App() {
 
   return (
     <div className="app">
+
       <div className="navbar">
-        
+
         <button
-          className={`nav-btn ${currentPage === 'dashboard' ? 'active' : ''}`}
+          className={`nav-btn ${
+            currentPage === 'dashboard'
+              ? 'active'
+              : ''
+          }`}
           onClick={() => setCurrentPage('dashboard')}
         >
           Dashboard
         </button>
 
         <button
-          className={`nav-btn ${currentPage === 'workout' ? 'active' : ''}`}
+          className={`nav-btn ${
+            currentPage === 'workout'
+              ? 'active'
+              : ''
+          }`}
           onClick={() => setCurrentPage('workout')}
         >
           Workout
         </button>
 
         <button
-          className={`nav-btn ${currentPage === 'history' ? 'active' : ''}`}
+          className={`nav-btn ${
+            currentPage === 'history'
+              ? 'active'
+              : ''
+          }`}
           onClick={() => setCurrentPage('history')}
         >
           Historial
         </button>
 
-        <button
-          className="nav-btn logout"
-          onClick={() => {
-            localStorage.removeItem('ft_profile')
-            setProfile(null)
-          }}
-        >
-          Salir
-        </button>
-
       </div>
 
       <div className="content">
-        {currentPage === 'dashboard' && <Dashboard profile={profile} />}
-        
-        {currentPage === 'workout' && <Workout />}
-        
-        {currentPage === 'history' && <History />}
+
+        {currentPage === 'dashboard' && (
+          <Dashboard profile={profile} />
+        )}
+
+        {currentPage === 'workout' && (
+          <Workout />
+        )}
+
+        {currentPage === 'history' && (
+          <History />
+        )}
+
       </div>
+
     </div>
   )
 }
